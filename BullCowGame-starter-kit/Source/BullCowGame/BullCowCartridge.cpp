@@ -5,14 +5,14 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 {
     Super::BeginPlay();
 
-    // Welcome player
-    PrintLine(TEXT("Guess the isogram and win a prize"));
-    PrintLine(TEXT("Guess the 5 letter word")); // TODO remove magic number
-    PrintLine(TEXT("Press enter to continue..."));
-
     SetUpGame();
 
-    // Prompt Player for guess
+    // PrintLine(FString::Printf(TEXT("The HiddenWord is: %s\nIt is %i letters long"), *HiddenWord, HiddenWord.Len()));
+
+    // Welcome player
+    PrintLine(TEXT("Guess the isogram and win a prize"));
+    PrintLine(TEXT("Guess the %i letter word"), HiddenWord.Len()); // TODO remove magic number
+    PrintLine(TEXT("Type in your guess and press enter"));
 }
 
 void UBullCowCartridge::OnInput(const FString& Input) // When the player hits enter
@@ -27,6 +27,13 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
     }
     else
     {
+        if (Input.Len() != HiddenWord.Len())
+        {
+            // FString::Printf is included in terminal code
+            PrintLine(TEXT("You do know how to count to %i right?"), HiddenWord.Len()); // TODO remove magic number
+            PrintLine(TEXT("Now let's try this again."));
+        }
+
         PrintLine("What an idiot");
     }
     
