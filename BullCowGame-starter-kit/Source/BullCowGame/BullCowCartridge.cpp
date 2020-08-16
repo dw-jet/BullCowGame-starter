@@ -50,6 +50,9 @@ void UBullCowCartridge::LoseALife()
     Lives -= 1;
     if (Lives < 1)
     {
+        ClearScreen();
+        PrintLine(TEXT("You are out of guesses."));
+        PrintLine(TEXT("The word was: %s."), *HiddenWord);
         PrintLine(TEXT("You are the weakest link. Goodbye."));
         EndGame();
     }
@@ -76,7 +79,7 @@ void UBullCowCartridge::ProcessGuess(FString Guess)
         }
         else 
         {
-            PrintLine("Wow, that wasn't even close");
+            PrintLine(TEXT("Wow, that wasn't even close"));
         }
         LoseALife();
     }
