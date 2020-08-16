@@ -19,36 +19,11 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
         SetUpGame();
     }
 
-    else {
-        if (Input == HiddenWord)
-        {
-            PrintLine(TEXT("I'm out. I don't fuck with psychics."));
-            EndGame();
-        }
-        else
-        {
-            if (Input.Len() != HiddenWord.Len())
-            {
-                // FString::Printf is included in terminal code
-                PrintLine(TEXT("You do know how to count to %i right?"), HiddenWord.Len());
-            }
-
-            PrintLine("What an idiot");
-            LoseALife();
-        }
+    else 
+    {
+        ProcessGuess(Input);
     }
 }
-// Check if isogram
-// Check right number of characters
-
-// Remove life
-
-// Check if lives > 0
-// If yes guess again
-// If no show gameover and hiddenword
-// Prompt to play again
-// Check user input
-// Play again quit
 
 void UBullCowCartridge::SetUpGame()
 {
@@ -59,8 +34,9 @@ void UBullCowCartridge::SetUpGame()
     // Welcome player
     PrintLine(TEXT("Guess the isogram and win a prize"));
     PrintLine(TEXT("Guess the %i letter word"), HiddenWord.Len());
-    PrintLine(TEXT("Type in your guess and press enter"));
     PrintLine(TEXT("You have %i guesses to get it right"), Lives);
+
+    PrintLine(TEXT("Type in your guess and press enter"));
 }
 
 void UBullCowCartridge::EndGame()
@@ -80,5 +56,28 @@ void UBullCowCartridge::LoseALife()
     else
     {
         PrintLine(TEXT("Only %i guesses left"), Lives);
+    }
+}
+
+void UBullCowCartridge::ProcessGuess(FString Guess)
+{
+    if (Guess == HiddenWord)
+        {
+            PrintLine(TEXT("Alright. You win. I'm out though.\nI don't fuck with psychics."));
+            EndGame();
+        }
+    else
+    {
+        if (Guess.Len() != HiddenWord.Len())
+        {
+            int32 HiddenWordLength = HiddenWord.Len();
+            // FString::Printf is included in terminal code
+            PrintLine(TEXT("It's %i letters, %i...\nYou do know how to count to %i right?"), HiddenWordLength,HiddenWordLength,HiddenWordLength);
+        }
+        else 
+        {
+            PrintLine("Wow, that wasn't even close");
+        }
+        LoseALife();
     }
 }

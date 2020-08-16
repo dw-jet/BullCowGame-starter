@@ -17,6 +17,7 @@ class BULLCOWGAME_API UBullCowCartridge : public UCartridge
 	void SetUpGame();
 	void EndGame();
 	void LoseALife();
+	void ProcessGuess(FString Guess);
 
 	// Your declarations go below!
 	private:
